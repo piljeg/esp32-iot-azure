@@ -1,0 +1,94 @@
+[
+  {
+    "@context": "dtmi:dtdl:context;2",
+    "@id": "dtmi:com:esp32iotazure:TemperatureController;1",
+    "@type": "Interface",
+    "extends": "dtmi:azure:iot:deviceUpdateContractModel;2",
+    "displayName": "Temperature Controller",
+    "description": "Device with a thermostat, display and remote reboot.",
+    "contents": [
+      {
+        "@type": "Property",
+        "name": "deviceStatus",
+        "displayName": "Device Status",
+        "schema": {
+          "@type": "Enum",
+          "valueSchema": "integer",
+          "enumValues": [
+            {
+              "name": "normal",
+              "displayName": "Normal",
+              "enumValue": 1
+            },
+            {
+              "name": "error",
+              "displayName": "Error",
+              "enumValue": 2
+            }
+          ]
+        },
+        "writable": false
+      },
+      {
+        "@type": "Command",
+        "name": "restart",
+        "displayName": "Restart",
+        "description": "Restart the device after waiting the number of seconds specified.",
+        "request": {
+          "name": "delay",
+          "displayName": "Delay",
+          "description": "Number of seconds to wait before rebooting the device.",
+          "schema": "integer"
+        }
+      },
+      {
+        "@type": "Component",
+        "name": "thermostat",
+        "displayName": "Thermostat",
+        "schema": "dtmi:com:esp32iotazure:Thermostat;1"
+      },
+      {
+        "@type": "Component",
+        "name": "display",
+        "displayName": "Display",
+        "schema": "dtmi:com:esp32iotazure:Display;1"
+      }
+    ]
+  },
+  {
+    "@context": [
+      "dtmi:dtdl:context;2",
+      "dtmi:dtdl:extension:quantitativeTypes;1"
+    ],
+    "@id": "dtmi:com:esp32iotazure:Thermostat;1",
+    "@type": "Interface",
+    "contents": [
+      {
+        "@type": [
+          "Telemetry",
+          "Temperature"
+        ],
+        "name": "temp",
+        "displayName": "Temperature",
+        "description": "Temperature in degree celsius.",
+        "schema": "integer",
+        "unit": "degreeCelsius"
+      }
+    ]
+  },
+  {
+    "@context": "dtmi:dtdl:context;2",
+    "@id": "dtmi:com:esp32iotazure:Display;1",
+    "@type": "Interface",
+    "contents": [
+      {
+        "@type": "Property",
+        "name": "brightness",
+        "displayName": "Brightness",
+        "description": "Brightness from 0% to 100%.",
+        "schema": "integer",
+        "writable": true
+      }
+    ]
+  }
+]
